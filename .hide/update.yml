@@ -1,0 +1,15 @@
+name: update
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update
+        run: |
+          bash update.sh
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: update

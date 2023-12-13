@@ -1,0 +1,145 @@
+name: brew
+
+on:
+  # pull_request:
+  #   branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      casks:
+        description: Custom list of casks to livecheck and bump if outdated
+        required: false
+  schedule:
+    # run every 12 hours
+    # - cron: "20 */12 * * *"
+    # Every day at 5am
+    - cron: "0 0 * * *"
+
+env:
+  FORMULAE: >
+    chatgpt-cli
+    ddns-go
+    musicplayer
+    shurl
+    vtm
+  CASKS: >
+    alist-desktop
+    amazon-corretto-8
+    basictex-cn
+    blender-cn
+    chatgpt
+    clash-verge
+    eshelper
+    freecad-cn
+    gimp-cn
+    goldendict-ng
+    gopeed
+    gridplayer
+    hapigo
+    i4tools
+    iina-cn
+    inkscape-cn
+    julia-cn
+    libreoffice-cn
+    linkease
+    lyx-cn
+    m3u8-downloader
+    mambaforge-cn
+    messauto
+    miniforge-cn
+    obs-cn
+    openai-translator
+    openstudio
+    pareto-security
+    pot-desktop
+    qt-creator-cn
+    texstudio-cn
+    ting-en
+    ting-es
+    ting-fr
+    vlc-cn
+    vscodium-cn
+    yank-note
+
+permissions:
+  contents: read
+
+jobs:
+  job1:
+    name: Test Casks
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-12, macos-11]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ivaquero/homebrew-chinese
+          ref: main
+          path: homebrew-chinese
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          core: false
+          cask: true
+          test-bot: false
+
+      - name: Add Tap
+        run: |
+          brew tap ivaquero/chinese
+
+      - name: Configure Git user
+        uses: Homebrew/actions/git-user-config@master
+        with:
+          username: ${{ (github.event_name == 'workflow_dispatch' && github.actor) || 'BrewTestBot' }}
+
+      - name: Bump casks
+        uses: Homebrew/actions/bump-packages@master
+        continue-on-error: true
+        with:
+          token: ${{ secrets.HOMEBREW_CASK_REPO_WORKFLOW_TOKEN }}
+          casks: ${{ github.event.inputs.casks || env.CASKS }}
+
+  job2:
+    name: Test Formulae
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-20.04]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ivaquero/homebrew-chinese
+          ref: main
+          path: homebrew-chinese
+
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          core: true
+          cask: false
+          test-bot: false
+
+      - name: Add Tap
+        run: |
+          brew tap ivaquero/chinese
+
+      - name: Configure Git user
+        uses: Homebrew/actions/git-user-config@master
+        with:
+          username: ${{ (github.event_name == 'workflow_dispatch' && github.actor) || 'BrewTestBot' }}
+
+      - name: Bump formulae
+        uses: Homebrew/actions/bump-packages@master
+        continue-on-error: true
+        with:
+          token: ${{ secrets.HOMEBREW_CORE_REPO_WORKFLOW_TOKEN }}
+          formulae: ${{ github.event.inputs.formulae || env.FORMULAE }}

@@ -1,9 +1,9 @@
-# [P] K'ed by TNT team from https://appstorrent.ru/, this is a Mac App Store edition.
+# [P] K'ed by TNT team from https://appstorrent.ru/, this is a Mac App Store edition from https://apps.apple.com/app/reeder-5/id1529448980
 cask "reeder" do
-  version "5.2.2"
+  version "5.4"
   sha256 :no_check
 
-  url "https://vk.com/s/v1/doc/CAd6P--qmf6nmPC1mfOb8iiMYCZ0yLhLkkYvcjfwz0j1ySOlkP0",
+  url "https://vk.com/doc249553273_668587412",
       verified: "vk.com/"
   name "Reeder"
   desc "News Reader"

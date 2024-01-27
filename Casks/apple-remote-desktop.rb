@@ -1,9 +1,9 @@
-# [P] K'ed by TNT team from https://appstorrent.ru/, this is a Mac App Store edition.
+# [P] K'ed by TNT team from https://appstorrent.ru/, this is a Mac App Store edition from https://apps.apple.com/app/apple-remote-desktop/id409907375
 cask "apple-remote-desktop" do
-  version "3.9.6"
+  version "3.9.7"
   sha256 :no_check
 
-  url "https://vk.com/s/v1/doc/O0wTLJarfTtqJU1LOq99y2yam5PcOgOczd0BTwtuh8SQ01AzaiU",
+  url "https://vk.com/doc781359414_671626650",
       verified: "vk.com/"
   name "Apple Remote Desktop"
   desc "Remote desktop app by Apple"

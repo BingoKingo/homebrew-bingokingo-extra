@@ -14,10 +14,10 @@ cask "sketch" do
     depends_on macos: ">= :big_sur"
   end
   on_monterey :or_newer do
-    version "99.1,178462"
+    version "99.5,178873"
     sha256 :no_check
 
-    url "https://vk.com/doc781359414_672568725",
+    url "https://vk.com/doc781359414_675280854",
         verified: "vk.com/"
 
     livecheck do

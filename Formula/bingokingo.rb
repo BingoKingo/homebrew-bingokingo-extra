@@ -451,14 +451,23 @@ class Bingokingo < Formula
       exec "#{capp_dir}/Skim.app/Contents/MacOS/Skim" "$@"
     EOS
 
-    File.write "#{bin}/librewolf-p", <<~EOS
+    File.write "#{bin}/librewolf-pk", <<~EOS
       #!/bin/bash
-      exec "#{capp_dir}/LibreWolf.app/Contents/MacOS/librewolf" "-private-window" "$@"
+      exec "#{bin}/librewolf" "-private-window" "-kiosk" "$@"
     EOS
 
-    File.write "#{bin}/Thorium-p", <<~EOS
+    File.write "#{bin}/thorium-pk", <<~EOS
       #!/bin/bash
-      exec "#{capp_dir}/Thorium.app/Contents/MacOS/Thorium" "-incognito" "$@"
+      # Note: Close all session before launch, extra flag configuration:
+      # --start-fullscreen
+      # --disable-pinch
+      # --no-user-gesture-required
+      # --overscroll-history-navigation=0
+      # --pull-to-refresh=0
+      # --user-data-dir=user/data/folder
+      # --load-extension=unpacked/extension/folder
+      # --no-first-run
+      exec "#{bin}/thorium" "--incognito" "--kiosk" "--start-fullscreen" "--app=$@"
     EOS
 
     # favourite script links
@@ -596,8 +605,7 @@ class Bingokingo < Formula
                       fileicon set "/Applications/ProApps" "#{prefix}/icon/folder/ProApps.icns";
                       fileicon set "/Applications/Xcode" "#{prefix}/icon/folder/Xcode.icns") > /dev/null 2>&1
                       # app
-                      (fileicon set "#{capp_dir}/A Better Finder Rename 11.app" "#{prefix}/icon/app/A Better Finder Rename 11.app.icns";
-                      fileicon set "#{capp_dir}/Aegisub.app" "#{prefix}/icon/app/Aegisub.app.icns";
+                      (fileicon set "#{capp_dir}/Aegisub.app" "#{prefix}/icon/app/Aegisub.app.icns";
                       fileicon set "#{capp_dir}/AltTab.app" "#{prefix}/icon/app/AltTab.app.icns";
                       fileicon set "#{capp_dir}/Android Studio.app" "#{prefix}/icon/app/Android Studio.app.icns";
                       fileicon set "#{capp_dir}/Barrier.app" "#{prefix}/icon/app/Barrier.app.icns";
@@ -854,6 +862,24 @@ class Bingokingo < Formula
         open '#{HOMEBREW_PREFIX}/opt/macvim/'
         open '#{HOMEBREW_PREFIX}/opt/python/'
     EOS
+  end
+
+  def post_install
+    File.write opt_prefix/"homebrew.bingokingo.sh", <<~EOS
+      #!/bin/bash
+      /bin/mkdir -p /tmp/fuse/bind/ph.telegra.Telegraph; #{opt_bin}/bindfs ~'/Library/Group Containers/group.ph.telegra.Telegraph/telegram-data/account-4714727146519464356/postbox/media' '/tmp/fuse/bind/ph.telegra.Telegraph'
+      /bin/mkdir -p /tmp/fuse/bind/com.tencent.xinWeChat; #{opt_bin}/bindfs ~'/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/016da36200819ebdcb71a71765889f42/Message/MessageTemp' '/tmp/fuse/bind/com.tencent.xinWeChat'
+      /bin/mkdir -p /tmp/fuse/bind/com.baidu.netdisk; #{opt_bin}/bindfs ~'/Library/Containers/A4C37A16-5129-4474-B490-73B571A4AD9D/Data/Documents/b2d04910ce0958bec993c1004e881210/Cache' '/tmp/fuse/bind/com.baidu.netdisk'
+      /bin/mkdir -p /tmp/fuse/bind/com.unsplash.Wallpapers; #{opt_bin}/bindfs ~'/Library/Containers/com.unsplash.Wallpapers/Data/Library/Application Support/com.unsplash.Wallpapers' '/tmp/fuse/bind/com.unsplash.Wallpapers'
+      /bin/mkdir -p /tmp/fuse/bind/mega.ios; #{opt_bin}/bindfs ~'/Library/Containers/C04C2967-E45F-4503-A674-C7D2E5416D2E/Data/Documents' '/tmp/fuse/bind/mega.ios'
+      /bin/mkdir -p /tmp/fuse/bind/org.kde.kdeconnect; #{opt_bin}/bindfs ~'/Library/Containers/5CB95D53-62DD-4440-B174-F5DD9745D758/Data/Documents' '/tmp/fuse/bind/org.kde.kdeconnect'
+      EOS
+    system "/bin/chmod", "555", opt_prefix/"homebrew.bingokingo.sh"
+  end
+
+  service do
+    run [opt_prefix/"homebrew.bingokingo.sh"]
+    keep_alive true
   end
 
   test do

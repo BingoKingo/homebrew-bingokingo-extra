@@ -1,9 +1,9 @@
 # [P] K'ed by TNT team from https://appstorrent.ru/.
 cask "capture-one" do
-  version "16.2.4.34"
+  version "16.3.4.5"
   sha256 :no_check
 
-  url "https://vk.com/s/v1/doc/Za0jAf1bfDwzcdk1Xwl2CBIugd1lWCPQ7V26ZC3vP_8YobRbdIc",
+  url "https://vk.com/doc781359414_675135646",
       verified: "vk.com/"
   name "Capture One"
   desc "RAW photo editing, tethering photo culling, smart adiustments"

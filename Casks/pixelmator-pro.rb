@@ -1,9 +1,9 @@
-# [P] K'ed by TNT team from https://appstorrent.ru/, this is a Mac App Store edition.
+# [P] K'ed by TNT team from https://appstorrent.ru/, this is a Mac App Store edition from https://apps.apple.com/app/pixelmator-pro/id1289583905
 cask "pixelmator-pro" do
-  version "3.4.1"
+  version "3.5.6"
   sha256 :no_check
 
-  url "https://vk.com/s/v1/doc/pkn2yqoRW8oUVJIAxZHu4-HB1S99htRUASPJX-cS3bx3JQQcw5I",
+  url "https://vk.com/doc781359414_675374875",
       verified: "vk.com/"
   name "Pixelmator Pro"
   desc "Pro image editing for everyone"

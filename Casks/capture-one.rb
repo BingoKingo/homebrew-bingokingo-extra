@@ -15,7 +15,7 @@ cask "capture-one" do
 
   container nested: "Manual install/Capture One #{version} [TNT].dmg"
 
-  app "Capture One 23.app"
+  app "Capture One.app"
 
   zap trash: [
     "~/Library/Application Support/com.captureone.captureone16",

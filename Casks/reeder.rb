@@ -13,7 +13,7 @@ cask "reeder" do
     skip
   end
 
-  container nested: "Manual install/Reeder #{version} MAS [TNT].dmg"
+  # container nested: "Manual install/Reeder #{version} MAS [TNT].dmg"
 
   app "Reeder.app"
 

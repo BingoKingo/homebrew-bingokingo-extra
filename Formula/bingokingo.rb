@@ -279,6 +279,8 @@ class Bingokingo < Formula
     ln_s "#{xcd}/Applications/Create ML.app", "#{prefix}/app/xcode/Create ML.app"
     ln_s "#{xcd}/Applications/FileMerge.app", "#{prefix}/app/xcode/FileMerge.app"
     ln_s "#{xcd}/Applications/Instruments.app", "#{prefix}/app/xcode/Instruments.app"
+    rcp = "Reality Composer Pro.app"
+    ln_s "#{xcd}/Applications/#{rcp}", "#{prefix}/app/xcode/#{rcp}"
     ln_s "#{xcd}/Developer/Applications/Simulator.app", "#{prefix}/app/xcode/Simulator.app"
     # xcode additional app links
     # xsb = "Xcode Server Builder.app"
@@ -287,7 +289,7 @@ class Bingokingo < Formula
     ln_s "#{xcatld}/Hardware/IORegistryExplorer.app", "#{prefix}/app/xcode/IORegistryExplorer.app"
     ln_s "#{xcatld}/Hardware/PacketLogger.app", "#{prefix}/app/xcode/PacketLogger.app"
 
-    # android sdk binary links, from /Users/shender/Library/Android/sdk
+    # android sdk binary links, from ~/Library/Android/sdk
     bin.install_symlink "#{home}/Library/Android/sdk/platform-tools/adb"
     bin.install_symlink "#{home}/Library/Android/sdk/platform-tools/dmtracedump"
     bin.install_symlink "#{home}/Library/Android/sdk/platform-tools/etc1tool"
@@ -323,6 +325,13 @@ class Bingokingo < Formula
     bin.install_symlink "#{home}/Library/Android/sdk/ndk/#{android_ndk_version}/ndk-lldb"
     bin.install_symlink "#{home}/Library/Android/sdk/ndk/#{android_ndk_version}/ndk-stack"
     bin.install_symlink "#{home}/Library/Android/sdk/ndk/#{android_ndk_version}/ndk-which"
+
+    # whisky wine binary links, from ~/Library/Application Support/com.isaacmarovitz.Whisky/Libraries
+    wskd = "#{home}/Library/Application Support/com.isaacmarovitz.Whisky/Libraries/"
+    bin.install_symlink "#{wskd}/Wine/bin/wine64"
+    bin.install_symlink "#{wskd}/Wine/bin/wine64" => "wine"
+    bin.install_symlink "#{wskd}/Wine/bin/wineserver"
+    bin.install_symlink "#{wskd}/winetricks"
 
     # homebrew binary links
     bin.install_symlink "#{HOMEBREW_PREFIX}/bin/7z" => "7-zip"
@@ -873,6 +882,7 @@ class Bingokingo < Formula
       /bin/mkdir -p /tmp/fuse/bind/com.unsplash.Wallpapers; #{opt_bin}/bindfs ~'/Library/Containers/com.unsplash.Wallpapers/Data/Library/Application Support/com.unsplash.Wallpapers' '/tmp/fuse/bind/com.unsplash.Wallpapers'
       /bin/mkdir -p /tmp/fuse/bind/mega.ios; #{opt_bin}/bindfs ~'/Library/Containers/C04C2967-E45F-4503-A674-C7D2E5416D2E/Data/Documents' '/tmp/fuse/bind/mega.ios'
       /bin/mkdir -p /tmp/fuse/bind/org.kde.kdeconnect; #{opt_bin}/bindfs ~'/Library/Containers/5CB95D53-62DD-4440-B174-F5DD9745D758/Data/Documents' '/tmp/fuse/bind/org.kde.kdeconnect'
+      /bin/mkdir -p /tmp/fuse/bind/com.bohemiancoding.sketch3; #{opt_bin}/bindfs ~'/Library/Application Support/com.bohemiancoding.sketch3/Libraries' '/tmp/fuse/bind/com.bohemiancoding.sketch3'
       EOS
     system "/bin/chmod", "555", opt_prefix/"homebrew.bingokingo.sh"
   end

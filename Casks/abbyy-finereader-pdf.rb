@@ -1,11 +1,11 @@
 # [P] K'ed by TNT team from https://appstorrent.ru/, modified from: https://github.com/Homebrew/homebrew-cask/blob/HEAD/Casks/a/abbyy-finereader-pdf.rb
 cask "abbyy-finereader-pdf" do
-  version "1402.18"
+  version "1402.19"
   sha256 :no_check
 
-  vers = "15.2.13"
+  vers = "15.2.14"
 
-  url "https://vk.com/doc781359414_670983753",
+  url "https://vk.com/doc781359414_675640098",
       verified: "vk.com/"
   name "ABBYY FineReader PDF"
   desc "Scan, OCR, and convert documents to searchable PDFs and other formats"
